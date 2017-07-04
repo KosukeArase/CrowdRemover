@@ -1,0 +1,7 @@
+*.mp4
+*.pyc
+*.avi
+*.jpg
+presentation/
+*~
+.DS_Store
