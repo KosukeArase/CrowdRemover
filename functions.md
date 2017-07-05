@@ -1,21 +1,3 @@
-# 素朴な質問
-
-* get_configってなんで別でfunction書くの？
-
-* ここってどうやってconfig渡ってんの？
-
-```
-    config = get_config()
-    set_windows()
-
-def set_windows():
-    cv2.namedWindow(config.WINDOW_ORG)
-    cv2.namedWindow(config.WINDOW_BACK)
-    cv2.namedWindow(config.WINDOW_DIFF)
-```
-
-* `_flag = _out.open(FILE_ORG.split(".")[0]+".avi"`ってなんで拡張子変えてんの？ movだと保存できない感じか．なるほど．
-
 # cv2
 
 ## videoオブジェクト
@@ -106,3 +88,106 @@ def set_windows():
 `cv2.boundingRect()`
 
 * 回転を考慮したものもある．`cv2.minAreaRect() `
+
+
+##fourcc
+
+* データフォーマットを一意に識別するための4バイトの並び
+* four-character code
+
+##ECC
+
+* Enhanced correlation coefficient
+* ２画像間の類似度を表す指標の１つ．
+
+###findTransformECC
+
+[参考](http://docs.opencv.org/3.0-beta/modules/video/doc/motion_analysis_and_object_tracking.html#findtransformecc)
+
+`cv2.findTransformECC(img1, img2, warp, warp_type)`
+
+img1, img2はともに 1チャンネルである必要がある．
+
+ECC指標の観点から変換行列を推定する関数．
+
+2画像間のECCを最大化するような，変換行列を取得する．
+
+$warpMatrix = \arg \max_W ECC(img1, img2)$
+
+motionTypeをMOTION_HOMOGRAPHY指定することによって3*3の行列を使用する．．
+
+
+##画像の幾何変換
+
+[参考](http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/py_tutorials/py_imgproc/py_geometric_transformations/py_geometric_transformations.html)
+
+
+###変換
+
+OpenCVは2つの以下の二つの変換関数を提供している
+
+* cv2.warpAffine: 2x3の変換行列とする
+* cv2.warpPerspective: 3x3の変換行列を入力とする
+
+###スケーリング
+
+* cv2.resize
+
+interpolation引数について．
+
+縮小の際の補完
+
+* cv2.INTER_AREA
+
+拡大の際の補完
+
+* cv2.INTER_CUBIC (処理が遅い)
+* cv2.INTER_LINEAR (デフォルト)
+
+
+###並進
+
+```
+M = np.float32([[1,0,100],[0,1,50]])
+dst = cv2.warpAffine(img,M,(cols,rows))
+```
+
+変換行列を入れる．
+
+
+###回転
+
+```
+M = cv2.getRotationMatrix2D((cols/2,rows/2),90,1)
+dst = cv2.warpAffine(img,M,(cols,rows))
+
+```
+
+回転行列を入れる．
+
+
+###アフィン変換
+
+`cv2.getAffineTransform`関数を使い，2*3の変換行列を作成．(対応点の座標が少なくとも3組必要)
+
+```
+pts1 = np.float32([[50,50],[200,50],[50,200]])
+pts2 = np.float32([[10,100],[200,50],[100,250]])
+
+M = cv2.getAffineTransform(pts1,pts2)
+
+dst = cv2.warpAffine(img,M,(cols,rows))
+```
+
+###射影変換
+
+`cv2.getPerspectiveTransform`関数を使い，3*3の変換行列を作成．(対応点の座標が少なくとも4組必要)
+
+```
+pts1 = np.float32([[56,65],[368,52],[28,387],[389,390]])
+pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
+
+M = cv2.getPerspectiveTransform(pts1,pts2)
+
+dst = cv2.warpPerspective(img,M,(300,300))
+```
