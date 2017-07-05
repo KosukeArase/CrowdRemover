@@ -6,7 +6,7 @@ Remove annoying crowds from a non-stable (taken with a hand camera) movie.
 - detect_objejct_from_movie.py: Extract the background from a stable movie.
   * First argument: The input movie file.
   * Second argument: The output movie file.
-- findTransformECC.py: 
+- anti_shake_byECC.py: Correct shake by with warpMatrix to maximize ECC between two frames
   * First argument: The input movie file.
   * Second argument: The output movie file.
 - hstack.py: merge two different size of movies.
