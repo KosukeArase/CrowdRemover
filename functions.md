@@ -90,17 +90,17 @@
 * 回転を考慮したものもある．`cv2.minAreaRect() `
 
 
-##fourcc
+## fourcc
 
 * データフォーマットを一意に識別するための4バイトの並び
 * four-character code
 
-##ECC
+## ECC
 
 * Enhanced correlation coefficient
 * ２画像間の類似度を表す指標の１つ．
 
-###findTransformECC
+### findTransformECC
 
 [参考](http://docs.opencv.org/3.0-beta/modules/video/doc/motion_analysis_and_object_tracking.html#findtransformecc)
 
@@ -117,19 +117,19 @@ $warpMatrix = \arg \max_W ECC(img1, img2)$
 motionTypeをMOTION_HOMOGRAPHY指定することによって3*3の行列を使用する．．
 
 
-##画像の幾何変換
+## 画像の幾何変換
 
 [参考](http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/py_tutorials/py_imgproc/py_geometric_transformations/py_geometric_transformations.html)
 
 
-###変換
+### 変換
 
 OpenCVは2つの以下の二つの変換関数を提供している
 
 * cv2.warpAffine: 2x3の変換行列とする
 * cv2.warpPerspective: 3x3の変換行列を入力とする
 
-###スケーリング
+### スケーリング
 
 * cv2.resize
 
@@ -145,7 +145,7 @@ interpolation引数について．
 * cv2.INTER_LINEAR (デフォルト)
 
 
-###並進
+### 並進
 
 ```
 M = np.float32([[1,0,100],[0,1,50]])
@@ -155,7 +155,7 @@ dst = cv2.warpAffine(img,M,(cols,rows))
 変換行列を入れる．
 
 
-###回転
+### 回転
 
 ```
 M = cv2.getRotationMatrix2D((cols/2,rows/2),90,1)
@@ -166,7 +166,7 @@ dst = cv2.warpAffine(img,M,(cols,rows))
 回転行列を入れる．
 
 
-###アフィン変換
+### アフィン変換
 
 `cv2.getAffineTransform`関数を使い，2*3の変換行列を作成．(対応点の座標が少なくとも3組必要)
 
@@ -179,7 +179,7 @@ M = cv2.getAffineTransform(pts1,pts2)
 dst = cv2.warpAffine(img,M,(cols,rows))
 ```
 
-###射影変換
+### 射影変換
 
 `cv2.getPerspectiveTransform`関数を使い，3*3の変換行列を作成．(対応点の座標が少なくとも4組必要)
 
